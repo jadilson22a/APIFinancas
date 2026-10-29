@@ -17,6 +17,8 @@ import com.github.jadilson22a.APIFinanceira.entity.DividaDTOEntrada;
 import com.github.jadilson22a.APIFinanceira.entity.DividaDTORetorno;
 import com.github.jadilson22a.APIFinanceira.service.DividaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/divida")
 public class DividaController {
@@ -28,13 +30,13 @@ public class DividaController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<DividaDTORetorno> criar(@RequestBody DividaDTOEntrada dto){
+	public ResponseEntity<DividaDTORetorno> criar(@Valid @RequestBody DividaDTOEntrada dto){
 		service.salvar(dto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<DividaDTORetorno> atualizar(@PathVariable("id") Integer id, @RequestBody DividaDTOEntrada dto){
+	public ResponseEntity<DividaDTORetorno> atualizar(@PathVariable("id") Integer id, @Valid @RequestBody DividaDTOEntrada dto){
 		return new ResponseEntity<DividaDTORetorno>(service.atualizar(id, dto), HttpStatus.OK);
 	}
 	
