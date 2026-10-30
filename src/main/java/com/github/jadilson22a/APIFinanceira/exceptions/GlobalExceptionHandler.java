@@ -1,5 +1,6 @@
 package com.github.jadilson22a.APIFinanceira.exceptions;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import jakarta.validation.UnexpectedTypeException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,7 +24,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(ObjectExistsException.class)
-	public ResponseEntity<ErroGenericoResposta> ObjectExists(ObjectExistsException exception){
+	public ResponseEntity<ErroGenericoResposta> objectExists(ObjectExistsException exception){
 		ErroGenericoResposta resposta = new ErroGenericoResposta(
 				HttpStatus.CONFLICT,
 				exception.getMessage());
@@ -34,7 +33,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<RespostaErroCampos> ObjectInvalid(
+	public ResponseEntity<RespostaErroCampos> objectInvalid(
 			MethodArgumentNotValidException exception) {
 		List<CampoErro> camposErros = new ArrayList<>();
 		
@@ -50,4 +49,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<RespostaErroCampos>(resposta, resposta.status());
 	}
 	
+	@ExceptionHandler(DateTimeParseException.class)
+	public ResponseEntity<ErroGenericoResposta> dataIncorreta(DateTimeParseException exception){
+		ErroGenericoResposta resposta = new ErroGenericoResposta(
+				HttpStatus.BAD_REQUEST,
+				"A data esta com o formato incorreto, formato aceito: dd/MM/yyyy");
+		
+		return new ResponseEntity<>(resposta,resposta.status());
+	}
 }

@@ -55,4 +55,19 @@ public class DividaController {
 	public ResponseEntity<List<DividaDTORetorno>> buscar(@PathVariable("nome") String nome){
 		return new ResponseEntity<List<DividaDTORetorno>>(service.buscar(nome), HttpStatus.OK);
 	}
+	
+	@GetMapping()
+	public ResponseEntity<List<DividaDTORetorno>> buscar(){
+		return new ResponseEntity<List<DividaDTORetorno>>(service.buscarTudo(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/pago/{pago}")
+	public ResponseEntity<List<DividaDTORetorno>> buscar(@PathVariable("pago") boolean pago){
+		return new ResponseEntity<List<DividaDTORetorno>>(service.buscar(pago), HttpStatus.OK);
+	}
+	
+	@PutMapping("/pagar/{id}")
+	public ResponseEntity<DividaDTORetorno> pagar(@PathVariable("id") Integer id){
+		return new ResponseEntity<DividaDTORetorno>(service.pagarDivida(id), HttpStatus.OK);
+	}
 }

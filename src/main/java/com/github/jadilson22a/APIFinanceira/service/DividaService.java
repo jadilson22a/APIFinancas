@@ -1,5 +1,6 @@
 package com.github.jadilson22a.APIFinanceira.service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,14 @@ public class DividaService {
 		if(dividaEncontrada.isPresent()) {
 			throw new ObjectExistsException();
 		}
+	}
+	
+	public DividaDTORetorno pagarDivida(Integer id) {
+		Optional<Divida> divida = repository.findById(id);
+		
+		divida.get().setPago(true);
+		repository.save(divida.get());
+		return divida.get().toDTO();
 	}
 	
 }

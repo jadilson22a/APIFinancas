@@ -2,6 +2,7 @@ package com.github.jadilson22a.APIFinanceira.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import com.github.jadilson22a.APIFinanceira.entity.DividaDTORetorno;
@@ -56,7 +57,16 @@ public class Divida {
 	}
 
 	public DividaDTORetorno toDTO() {
-		return new DividaDTORetorno(id, nome, valor, dataVencimento, pago);
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return new DividaDTORetorno(
+				id, 
+				nome, 
+				valor, 
+				String.valueOf(
+						dataVencimento.getDayOfMonth()
+						+"/"+ dataVencimento.getMonthValue()
+						+"/"+dataVencimento.getYear())
+				, pago);
 	}
 
 	public Integer getId() {
