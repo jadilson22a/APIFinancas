@@ -79,6 +79,10 @@ public class CronogramaPagamento {
 		this.dividas = dividas;
 	}
 	
+	public void addDividas(List<Divida> dividas) {
+		dividas.forEach(x -> this.dividas.add(x));
+	}
+	
 	public CronogramaPagamentoDTORetorno toDTO() {
 		return new CronogramaPagamentoDTORetorno(id, titulo, data, dividas);
 	}
